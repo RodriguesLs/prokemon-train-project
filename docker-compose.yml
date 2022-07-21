@@ -1,0 +1,19 @@
+version: 3
+services:
+  db:
+    image: postgres
+    enviroment:
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: postgres
+      - POSTGRES_DATABASE: postgres
+    volumes:
+      - ../tmp:/var/tmp/db
+
+  app:
+    build:
+      context: .
+    ports:
+      - 3030:3000
+    volumes:
+      - .:/app
+    tty: true
