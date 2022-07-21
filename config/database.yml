@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: '0.0.0.0'
+
+development:
+  <<: *default
+  database: zrp_project_development
+
+test:
+  <<: *default
+  database: zrp_project_test
+
+production:
+  <<: *default
+  database: zrp_project_production
+  username: zrp_project
+  password: <%= ENV["ZRP_PROJECT_DATABASE_PASSWORD"] %>

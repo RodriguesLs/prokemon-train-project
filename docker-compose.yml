@@ -1,13 +1,14 @@
-version: 3
+version: '3'
 services:
   db:
     image: postgres
-    enviroment:
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: postgres
-      - POSTGRES_DATABASE: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - ../tmp:/var/tmp/db
+      - ./tmp/db/:/var/lib/postgresql/data
 
   app:
     build:
@@ -16,4 +17,9 @@ services:
       - 3030:3000
     volumes:
       - .:/app
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/zrp_project
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: db
     tty: true
