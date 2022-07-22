@@ -3,9 +3,11 @@
 module Api
   class PokemonsController < ApplicationController
     def search
-      abilities = pokemon_search(params[:pokemon_name])
- 
-      render json: abilities
+      result = pokemon_search(params[:pokemon_name])
+
+      return render json: { message: result.message }, status: 404 if result.failure?
+
+      render json: result.abilities
     end
 
     private

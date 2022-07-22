@@ -14,10 +14,20 @@ class SearchPokemonService
   def perform
     response = PokeApi::FetchPokemon.perform(pokemon_name)
 
-    ordered_abilities(response.body)
+    return failure if response.body == 'Not Found'
+
+    success(response)
   end
 
   private
+
+  def success(response)
+    OpenStruct.new(failure?: false, abilities: ordered_abilities(response.body))
+  end
+
+  def failure
+    OpenStruct.new(failure?: true, message: 'Pokemon not found, try again')
+  end
 
   def ordered_abilities(body)
     pokemons = JSON.parse(body)

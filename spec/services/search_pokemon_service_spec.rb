@@ -32,7 +32,7 @@ RSpec.describe SearchPokemonService do
     context 'when success' do
       before { allow(PokeApi::FetchPokemon).to receive(:perform).and_return(OpenStruct.new(body: mock_response)) }
 
-      it { expect(search_service).to contain_exactly('imposter', 'limber') }
+      it { expect(search_service.abilities).to contain_exactly('imposter', 'limber') }
     end
   end
 end
