@@ -1,5 +1,6 @@
 ## ZRP PROJECT
 
+This project was developed as part of the challenge proposed by ZRP.
 
 ### Project specifications
 
@@ -20,4 +21,16 @@
 
 #### By run app locally
 
+1. Install ruby 3.1.1, then install bundler and rails.
+2. Run ```docker-compose up db```.
+3. Adjust database.yml to access docker database.
+5. Access the folder of project and run ```bundle install```.
+5. Run ```rails db:create db:migrate```.
+6. Finally, run ```rails s```.
+
 ### How to run specs
+
+1. After cloning this project, run ```docker-compose up -d```.
+2. Access the api container with command ```docker-compose exec app bash```.
+3. Then run ```rails db:test:prepare```.
+4. Finally, just run ```rspec spec/```.
