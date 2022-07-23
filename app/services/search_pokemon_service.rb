@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SearchPokemonService
-  attr_reader :pokemon_name
+  attr_reader :pokemon_name, :pokemon
 
   def initialize(pokemon_name)
     @pokemon_name = pokemon_name
@@ -22,17 +22,21 @@ class SearchPokemonService
   private
 
   def success(response)
-    OpenStruct.new(failure?: false, abilities: ordered_abilities(response.body))
+    @pokemon = JSON.parse(response.body)
+
+    OpenStruct.new(failure?: false, name: name, abilities: ordered_abilities)
   end
 
   def failure
     OpenStruct.new(failure?: true, message: 'Pokemon not found, try again')
   end
 
-  def ordered_abilities(body)
-    pokemons = JSON.parse(body)
+  def name
+    pokemon['name']
+  end
 
-    pokemons['abilities'].map { |a| a['ability']['name'] }.sort
+  def ordered_abilities
+    pokemon['abilities'].map { |a| a['ability']['name'] }.sort
   end
 
   def search_params
