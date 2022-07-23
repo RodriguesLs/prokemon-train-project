@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe SearchPokemonService do
   let(:mock_response) do
     {
+      name: 'ditto',
       abilities: [
         {
           ability: {
@@ -33,6 +34,7 @@ RSpec.describe SearchPokemonService do
       before { allow(PokeApi::FetchPokemon).to receive(:perform).and_return(OpenStruct.new(body: mock_response)) }
 
       it { expect(search_service.abilities).to contain_exactly('imposter', 'limber') }
+      it { expect(search_service.name).to eq('ditto') }
     end
   end
 end
